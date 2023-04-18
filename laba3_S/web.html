@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Pokemon Search</title>
+  <link href="style.css" rel="stylesheet" type="text/css">
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+</head>
+<body>
+<div id="app">
+  <header>
+    <h1>Pokemon Search</h1>
+    <span>{{ totalPokemon }}</span>
+  </header>
+  <input
+          type="text"
+          v-model="searchTerm"
+          @click="togglePokemonList"
+          @keyup.enter="searchPokemon"
+          ref="search"
+          placeholder="Enter a Pokemon name"
+  >
+  <div v-if="showPokemonList" class="pokemon-list">
+
+    <ul>
+      <li v-for="pokemon in filteredPokemon" :key="pokemon.name" @click="clickPokemon(pokemon)">
+        <img :src="pokemon.image" :alt="pokemon.name">
+        <span>{{ pokemon.name }}</span>
+        <button class="delete" @click.stop="deletePokemon(pokemon.name)">Delete</button>
+      </li>
+    </ul>
+  </div>
+  <div class="pokemon-card" v-if="selectedPokemon" :style="{ top: selectedPokemonTop }">
+    <h2>{{ selectedPokemon.name }}</h2>
+    <img :src="selectedPokemon.image" :alt="selectedPokemon.name" />
+    <p>Height: {{ selectedPokemon.height }}</p>
+    <p>Weight: {{ selectedPokemon.weight }}</p>
+    <button @click="closePokemonCard">Close</button>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
